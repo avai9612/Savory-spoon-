@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savory Spoon | Food Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@preline/preline@2.0.0/dist/preline.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            200: '#fecaca',
+                            300: '#fca5a5',
+                            400: '#f87171',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                        },
+                        secondary: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+        
+        .recipe-card:hover .recipe-image {
+            transform: scale(1.05);
+        }
+        
+        .step-number {
+            width: 36px;
+            height: 36px;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="text-xl font-serif font-bold text-primary-600 dark:text-primary-400">Savory Spoon</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition">Home</a>
+                    <a href="#recipes" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition">Recipes</a>
+                    <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition">About</a>
+                    <button id="theme-toggle" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:inline"></i>
+                    </button>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button type="button" class="hs-collapse-toggle p-2" data-hs-collapse="#mobile-menu" aria-controls="mobile-menu" aria-label="Toggle navigation">
+                        <i class="fas fa-bars text-gray-700 dark:text-gray-300"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hs-collapse hidden md:hidden bg-white dark:bg-gray-800 shadow-md">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-700">Home</a>
+                <a href="#recipes" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-700">Recipes</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-700">About</a>
+                <button id="theme-toggle-mobile" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <span class="flex items-center">
+                        <i class="fas fa-moon dark:hidden mr-2"></i>
+                        <i class="fas fa-sun hidden dark:inline mr-2"></i>
+                        Toggle Theme
+                    </span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative bg-gradient-to-r from-primary-500 to-secondary-500 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+            <div class="max-w-3xl">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6">Discover Delicious Recipes</h1>
+                <p class="text-xl md:text-2xl mb-8">Join our culinary journey with easy-to-follow recipes and stunning food photography</p>
+                <a href="#featured" class="inline-block bg-white text-primary-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition shadow-lg">Explore Recipes</a>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-gray-900 to-transparent"></div>
+    </header>
+
+    <!-- Featured Recipe -->
+    <section id="featured" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">Today's Featured Recipe</h2>
+            <div class="w-20 h-1 bg-primary-500 mx-auto"></div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1">
+                <h3 class="text-2xl md:text-3xl font-serif font-bold mb-4">Creamy Garlic Parmesan Pasta</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">This rich and creamy pasta dish comes together in just 20 minutes, making it perfect for busy weeknights. The combination of garlic, parmesan, and a touch of cream creates a luxurious sauce that coats every strand of pasta.</p>
+                
+                <div class="flex flex-wrap gap-4 mb-6">
+                    <div class="flex items-center">
+                        <i class="fas fa-clock text-primary-500 mr-2"></i>
+                        <span>20 mins</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-utensils text-primary-500 mr-2"></i>
+                        <span>4 servings</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-signal text-primary-500 mr-2"></i>
+                        <span>Easy</span>
+                    </div>
+                </div>
+                
+                <a href="#recipe-detail" class="inline-block bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium transition">View Recipe</a>
+            </div>
+            
+            <div class="order-1 md:order-2 relative overflow-hidden rounded-xl shadow-xl">
+                <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                     alt="Creamy Garlic Parmesan Pasta" 
+                     class="w-full h-auto rounded-xl transition duration-500 recipe-image">
+                <div class="absolute top-4 right-4 bg-white dark:bg-gray-800 text-primary-500 px-3 py-1 rounded-full text-sm font-medium shadow">
+                    Featured
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipe Categories -->
+    <section class="bg-gray-100 dark:bg-gray-800 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">Recipe Categories</h2>
+                <div class="w-20 h-1 bg-primary-500 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <a href="#" class="bg-white dark:bg-gray-700 rounded-xl p-6 text-center hover:shadow-lg transition group">
+                    <div class="w-16 h-16 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-200 dark:group-hover:bg-primary-800 transition">
+                        <i class="fas fa-utensils text-primary-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-medium text-lg">Main Dishes</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">120+ recipes</p>
+                </a>
+                
+                <a href="#" class="bg-white dark:bg-gray-700 rounded-xl p-6 text-center hover:shadow-lg transition group">
+                    <div class="w-16 h-16 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-200 dark:group-hover:bg-primary-800 transition">
+                        <i class="fas fa-bread-slice text-primary-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-medium text-lg">Baking</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">85+ recipes</p>
+                </a>
+                
+                <a href="#" class="bg-white dark:bg-gray-700 rounded-xl p-6 text-center hover:shadow-lg transition group">
+                    <div class="w-16 h-16 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-200 dark:group-hover:bg-primary-800 transition">
+                        <i class="fas fa-leaf text-primary-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-medium text-lg">Vegetarian</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">60+ recipes</p>
+                </a>
+                
+                <a href="#" class="bg-white dark:bg-gray-700 rounded-xl p-6 text-center hover:shadow-lg transition group">
+                    <div class="w-16 h-16 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-200 dark:group-hover:bg-primary-800 transition">
+                        <i class="fas fa-ice-cream text-primary-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-medium text-lg">Desserts</h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">95+ recipes</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipe Gallery -->
+    <section id="recipes" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">Latest Recipes</h2>
+            <div class="w-20 h-1 bg-primary-500 mx-auto"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="recipe-container">
+            <!-- Recipes will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <!-- Recipe Detail Section -->
+    <section id="recipe-detail" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                     alt="Creamy Garlic Parmesan Pasta" 
+                     class="w-full h-64 sm:h-80 md:h-96 object-cover">
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-white">Creamy Garlic Parmesan Pasta</h2>
+                    <div class="flex flex-wrap gap-4 mt-4">
+                        <div class="flex items-center text-white">
+                            <i class="fas fa-clock mr-2"></i>
+                            <span>20 mins</span>
+                        </div>
+                        <div class="flex items-center text-white">
+                            <i class="fas fa-utensils mr-2"></i>
+                            <span>4 servings</span>
+                        </div>
+                        <div class="flex items-center text-white">
+                            <i class="fas fa-signal mr-2"></i>
+                            <span>Easy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-6 md:p-8">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="md:col-span-2">
+                        <h3 class="text-2xl font-serif font-bold mb-4">Description</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">This creamy garlic parmesan pasta is the ultimate comfort food that comes together in just 20 minutes! The sauce is rich, creamy, and packed with garlic flavor, while the parmesan adds a salty, nutty depth. It's perfect for busy weeknights when you want something delicious without spending hours in the kitchen.</p>
+                        
+                        <h3 class="text-2xl font-serif font-bold mb-4">Ingredients</h3>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-start">
+                                <span class="inline-block w-5 h-5 bg-primary-100 dark:bg-primary-900 rounded-full mr-3 mt-1 flex-shrink-0"></span>
+                                <span>12 oz fettuccine or linguine pasta</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="inline-block w-5 h-5 bg-primary-100 dark:bg-primary-900 rounded-full mr-3 mt-1 flex-shrink-0"></span>
+                                <span>3 tablespoons unsalted butter</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="inline-block w-5 h-5 bg-primary-100 dark:bg-primary-900 rounded-full mr-3 mt-1 flex-shrink-0"></span>
+                                <span>4 cloves garlic, minced</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="inline-block w-5 h-5 bg-primary-100 dark:bg-primary-900 rounded-full mr-3 mt-1 flex-shrink-0"></span>
+                                <span>1 cup heavy cream</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="inline-block w-5 h-5 bg-primary-100 dark:bg-primary-900 rounded
